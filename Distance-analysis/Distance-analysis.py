@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Relative distance factors (not parsecs, not Andromeda data)
+# Relative distance factors
 distance = np.array([1.0, 2.0, 5.0, 10.0, 20.0])
 
 angular_size = 1.0 / distance
@@ -14,7 +14,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(distance, angular_size, "o-", color="tab:blue", label=r"Angular size $\propto 1/d$")
 plt.plot(distance, flux, "o--", color="tab:green", label=r"Flux $\propto 1/d^2$")
 
-plt.title("Toy model: angular size and flux vs relative distance")
+plt.title("Angular size and flux vs relative distance")
 plt.xlabel("Relative distance")
 plt.ylabel("Value relative to the nearest point")
 plt.legend()
