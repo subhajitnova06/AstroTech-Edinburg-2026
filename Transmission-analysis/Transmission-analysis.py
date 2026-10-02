@@ -1,27 +1,36 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Wavelength grid (microns)
-wavelength = np.linspace(0, 20, 400)
-
-# Transmission array initialized to 0
+# Wavelength in microns. This is a schematic, not a radiative-transfer model.
+wavelength = np.linspace(0.1, 25.0, 2000)
 T = np.zeros_like(wavelength)
 
-# Optical pass: narrow peak from 0.3 to 1 micron at 0.8
-T[(wavelength >= 0.3) & (wavelength <= 1.0)] = 0.8
 
-# Radio pass: from 10 to 20 microns at 0.2
-T[(wavelength >= 10.0) & (wavelength <= 20.0)] = 0.2
+def set_window(wmin, wmax, height):
+    mask = (wavelength >= wmin) & (wavelength <= wmax)
+    T[mask] = np.maximum(T[mask], height)
 
-plt.figure(figsize=(8, 6))
-plt.plot(wavelength, T, linewidth=2)
 
-plt.title('X-ray blocked, Radio + Optical pass', fontsize=18)
-plt.xlabel('Wavelength (microns)', fontsize=14)
-plt.ylabel('Transmission', fontsize=14)
+# Optical window
+set_window(0.3, 0.9, 0.85)
+# Near-IR water-vapour gaps
+set_window(1.5, 1.8, 0.55)
+set_window(2.0, 2.4, 0.50)
+# Mid-IR windows used in ground-based astronomy
+set_window(3.0, 5.0, 0.45)
+set_window(8.0, 13.0, 0.50)
+# 10-20 um is thermal IR, NOT radio. Radio is cm--m wavelengths.
 
-plt.xlim(0, 20)
-plt.ylim(0, 0.85)
-
+plt.figure(figsize=(9, 5))
+plt.plot(wavelength, T, lw=2, color="steelblue")
+plt.axvspan(0.3, 0.9, alpha=0.12, color="C0", label="Optical")
+plt.axvspan(8.0, 13.0, alpha=0.12, color="C1", label="N-band IR")
+plt.title("Schematic: Earth's atmospheric windows (ground-based)")
+plt.xlabel("Wavelength (\u03bcm)")
+plt.ylabel("Relative transmission")
+plt.xlim(0.1, 25.0)
+plt.ylim(0.0, 1.0)
+plt.legend()
+plt.grid(True, linestyle=":", alpha=0.5)
 plt.tight_layout()
 plt.show()

@@ -1,9 +1,14 @@
-### Optical Filter Spectrum Simulation
-Models a step-function transmission profile for a custom dual-band optical filter across the electromagnetic spectrum from $0$ to $20\text{ }\mu\text{m}$.
+# Schematic atmospheric windows
 
-* **Concept:** Multi-band Pass Filtering
-* **Key Insight:** Demonstrates how step-functions are applied to numpy arrays to simulate idealized optical components. The filter profile blocks high-energy wavelengths (X-rays/UV) entirely, permits high transmission ($80\%$) in the optical window, and lower transmission ($20\%$) in the longer infrared/radio window.
+Ground-based astronomy is limited by Earth's atmosphere. This script is a **labelled cartoon**, not a HITRAN / radiative-transfer calculation.
 
-#### Running this Simulation
+What the original workshop sketch got wrong, and what this version states instead:
+
+- **0.3–0.9 μm** — optical window (high transmission).
+- **~1.5–2.4 μm, 3–5 μm, 8–13 μm** — infrared windows (water and CO2 still eat other IR bands).
+- **10–20 μm is mid-infrared, not radio.** Radio windows start at millimetre-to-metre wavelengths (\(\sim 10^4\) μm and longer).
+- UV and X-rays are blocked from the ground; that is why those telescopes fly in space.
+
 ```bash
-python 03_Optical_Filter/optical_filter.py
+python Transmission-analysis.py
+```
